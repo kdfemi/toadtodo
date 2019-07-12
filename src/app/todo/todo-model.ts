@@ -1,4 +1,17 @@
+import { Task } from './task';
+
 export class TodoModel {
-    
-    constructor(private id:number, private title:string, private task:string[], private descriotion:string){}
+     id: number;
+     title: string;
+     task: Task[];
+     description: string;
+     ownerId: number;
+
+    constructor( id: number, title: string, task: Task[],  description: string, ownerId: number) {
+        this.id = id;
+        this.title = title;
+        this.task = task;
+        this.description = description;
+        this.ownerId = ownerId;
+    }
 }

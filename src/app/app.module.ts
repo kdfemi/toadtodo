@@ -18,6 +18,7 @@ import { TodoItemComponent } from './todo/todo-list/todo-item/todo-item.componen
 import { TodoDetailComponent } from './todo/todo-detail/todo-detail.component';
 import { TodoCompletedItemComponent } from './todo/todo-completed/todo-completed-item/todo-completed-item.component';
 import { TodoPendingItemComponent } from './todo/todo-pending/todo-pending-item/todo-pending-item.component';
+import { DropdownDirective } from './shared/dropdown.directive';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TodoPendingItemComponent } from './todo/todo-pending/todo-pending-item/
     TodoItemComponent,
     TodoDetailComponent,
     TodoCompletedItemComponent,
-    TodoPendingItemComponent
+    TodoPendingItemComponent,
+    DropdownDirective,
   ],
   imports: [
     BrowserModule,

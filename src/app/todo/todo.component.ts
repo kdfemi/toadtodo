@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-todo',
@@ -7,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoComponent implements OnInit {
 
+  isToggled = false;
+  @ViewChild('sidebar', {static: false}) sidebar: ElementRef;
+  @ViewChild('main', {static: false}) main: ElementRef;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  sidebarToggleClick() {
+    this.sidebar.nativeElement.classList.toggle('hidden-xs');
+    this.sidebar.nativeElement.classList.toggle('col-xs-6');
+    this.sidebar.nativeElement.classList.toggle('col-xs-12');
+    this.isToggled = !this.isToggled;
+    this.main.nativeElement.classList.toggle('hidden-xs');
+  }
 }
