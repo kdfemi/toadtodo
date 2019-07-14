@@ -19,6 +19,10 @@ import { TodoDetailComponent } from './todo/todo-detail/todo-detail.component';
 import { TodoCompletedItemComponent } from './todo/todo-completed/todo-completed-item/todo-completed-item.component';
 import { TodoPendingItemComponent } from './todo/todo-pending/todo-pending-item/todo-pending-item.component';
 import { DropdownDirective } from './shared/dropdown.directive';
+import { SidebarToggleDirective } from './shared/sidebar-toggle.directive';
+import { NotFoundPageComponent } from './error404/not-found-page/not-found-page.component';
+import { SidebarTodoToggleDirective } from './shared/sidebar-todo-toggle.directive';
+import { MainbarTodoToggleDirective } from './shared/mainbar-todo-toggle.directive';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,10 @@ import { DropdownDirective } from './shared/dropdown.directive';
     TodoCompletedItemComponent,
     TodoPendingItemComponent,
     DropdownDirective,
+    SidebarToggleDirective,
+    NotFoundPageComponent,
+    SidebarTodoToggleDirective,
+    MainbarTodoToggleDirective
   ],
   imports: [
     BrowserModule,

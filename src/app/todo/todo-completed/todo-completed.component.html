@@ -1,1 +1,7 @@
-<app-todo-completed-item></app-todo-completed-item>
+<div *ngFor="let todo of todos">
+    <ng-template [ngIf]="!todo.closed">
+            <app-todo-completed-item  [todo]="todo">
+            </app-todo-completed-item>
+    </ng-template>
+</div>
+

@@ -11,25 +11,27 @@ import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoItemComponent } from './todo/todo-list/todo-item/todo-item.component';
 import { TodoDetailComponent } from './todo/todo-detail/todo-detail.component';
+import { NotFoundPageComponent } from './error404/not-found-page/not-found-page.component';
 
 
 const routes: Routes = [
-  { path:'', component:HomeComponent, children:[
-    {path:'', component:SigupComponent},
-    {path:'signin', component:SiginComponent},
-    {path: 'signup', component:SigupComponent}
+  { path: '', component: HomeComponent, children: [
+    {path: '', component: SigupComponent},
+    {path: 'signin', component: SiginComponent},
+    {path: 'signup', component: SigupComponent}
   ]},
 
-  {path:'todo', component:TodoComponent, children:[
-    {path:'', component:TodoStartComponent},
-    {path:'completed', component:TodoCompletedComponent},
-    {path: 'pending', component:TodoPendingComponent},
-    {path:'edit', component:TodoEditComponent},
-    {path:'edit/:id', component:TodoEditComponent},
-    {path:'list', component:TodoListComponent},
-    {path:'list/:id', component:TodoDetailComponent},
-    
-  ]}
+  {path : 'todo', component: TodoComponent, children: [
+    {path : '', component: TodoStartComponent},
+    {path : 'completed', component: TodoCompletedComponent},
+    {path : 'pending', component: TodoPendingComponent},
+    {path : 'edit', component: TodoEditComponent},
+    {path: 'edit/:id', component: TodoEditComponent},
+    {path: 'list', component: TodoListComponent},
+    {path: 'list/:id', component: TodoDetailComponent}
+  ]},
+
+  {path: '**', component: NotFoundPageComponent}
 ];
 
 @NgModule({

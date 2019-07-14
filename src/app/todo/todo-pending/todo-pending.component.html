@@ -1,2 +1,8 @@
-<app-todo-pending-item></app-todo-pending-item>
+<div *ngFor="let todo of todos">
+        <ng-template [ngIf]="todo.closed">
+                <app-todo-pending-item [todo]="todo">
+                </app-todo-pending-item>
+        </ng-template>
+</div>
+
 

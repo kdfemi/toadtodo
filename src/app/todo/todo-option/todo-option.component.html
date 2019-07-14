@@ -1,10 +1,21 @@
 <div class="row">
         <div class="col-xs-12">
             <div class="list-group">
-                <a [routerLink]="['edit']" class="list-group-item ">Add Todo</a> <!--active -->
-                <a [routerLink]="['list']" class="list-group-item">view Todo</a>
-                <a [routerLink]="['completed']" class="list-group-item">Track todo</a>
-                <a [routerLink]="['pending']" class="list-group-item">Pending Todo</a>
+                <a [routerLink]="['/', 'todo']" 
+                    class="list-group-item "
+                    [routerLinkActive]="'active'" [routerLinkActiveOptions]= "{exact:true}">Home</a>
+                <a [routerLink]="['edit']" 
+                    class="list-group-item "
+                    [routerLinkActive]="'active'">Add Todo</a> <!--active -->
+                <a [routerLink]="['list']" 
+                    class="list-group-item"
+                    [routerLinkActive]="'active'">view Todo</a>
+                <a [routerLink]="['completed']" 
+                    class="list-group-item"
+                    [routerLinkActive]="'active'">Track todo</a>
+                <a [routerLink]="['pending']" 
+                    class="list-group-item"
+                    [routerLinkActive]="'active'">Pending Todo</a>
             </div>
         </div>
     </div>

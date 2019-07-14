@@ -11,14 +11,31 @@ export class TodoService {
   todoChanged = new Subject<TodoModel[]>();
   todo = [
   new TodoModel(1, 'Learn Angular',
-  [new Task(1, 'introduction', true), new Task(2, 'components', false), new Task(3, 'directive', false)],
-  'Learning angular from the begining to the end', 1),
+  [new Task(1, 'introduction', true),
+  new Task(2, 'components', false),
+  new Task(3, 'directive', false, )],
+  'Learning angular from the begining to the end', 1, false),
+
   new TodoModel(2, 'Learn Ionic',
-  [new Task(1, 'mobile design', true), new Task(2, 'pages', true), new Task(3, 'multiple pages', false)],
-  'Learning Ionic from the begining to the end', 1),
+  [new Task(1, 'mobile design', true),
+  new Task(2, 'pages', true),
+  new Task(3, 'multiple pages', false)],
+  'Learning Ionic from the begining to the end', 1, false),
+
   new TodoModel(3, 'Learn java',
-  [new Task(1, 'javaFx', true), new Task(2, 'jersey', true), new Task(3, 'Hibernate', false), new Task(4, 'Spring', false)],
-  'Learning angular from the begining to the end', 1)
+  [new Task(1, 'javaFx', true),
+  new Task(2, 'jersey', true),
+  new Task(3, 'Hibernate', false),
+  new Task(4, 'Spring', false)],
+  'Learning angular from the begining to the end', 1, true),
+
+  new TodoModel(4, 'Learn Spring',
+  [new Task(1, 'What is spring', true),
+  new Task(2, 'Spring frameworks', true),
+  new Task(3, 'Dependencing injection', true),
+  new Task(4, 'IoC', true)],
+  'Learning angular from the begining to the end', 1, false)
+
 ];
   constructor() { }
 

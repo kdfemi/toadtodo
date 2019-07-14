@@ -1,1 +1,24 @@
-<p>todo-start works!</p>
+<ul class="list-group" style="cursor: pointer">
+    <a class="list-group-item" [routerLink]="[ 'list']">
+        <span class="badge">{{todoStat.all}}</span>
+        Total todo
+    </a>
+</ul>
+<ul class="list-group" style="cursor: pointer">
+    <a class="list-group-item" [routerLink]="[ 'completed']">
+        <span class="label label-as-badge label-primary pull-right">{{todoStat.ongoing}}</span>
+        ongoing Todo
+    </a>
+</ul>
+<ul class="list-group" style="cursor: pointer">
+        <a class="list-group-item" [routerLink]="[ 'completed']">
+            <span class="label label-as-badge label-success pull-right">{{todoStat.completed}}</span>
+              Completed Todo
+        </a>
+</ul>
+<ul class="list-group">
+        <a class="list-group-item" style="cursor: pointer" [routerLink]="['pending']">
+            <span class="label label-as-badge label-danger pull-right" >{{todoStat.pending}}</span>
+              Closed/pended Todo
+        </a>
+</ul>

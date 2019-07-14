@@ -1,11 +1,14 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="list-group">
-            <h3 class="bg-primary">Task1</h3>
-            <a href="#" class="list-group-item">description</a>
+            <h3 class="bg-primary">{{todo.title}}</h3>
+            <a class="list-group-item" style="cursor: pointer" [routerLink]="['/','todo','list', todo.id]">{{todo.description}}</a>
             <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 20%;"> <!--progress-bar-success alternate colors-->
-                    <span >20% Complete</span>
+                <div class="progress-bar"  [ngStyle]=" {'width': ratio + '%'}" 
+                [ngClass]="(ratio >= 60 )? 'progress-bar-success' : 
+                (ratio >= 30 && ratio < 50)?'progress-bar-warning': 
+                (ratio >= 50 && ratio < 60)?'progress-bar-info': 'progress-bar-danger'"> <!--progress-bar-success alternate colors-->
+                    <span >{{ratio}}% Complete</span>
                 </div>
             </div>
         </div>

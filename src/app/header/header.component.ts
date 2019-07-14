@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, Route, ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
+
   @ViewChild('logginAction', {static: false}) loggingAction: ElementRef;
   isClicked = false;
-  isToggled = false;
+  // isToggled = false;
 
   ngOnInit() {
 
@@ -30,7 +32,7 @@ export class HeaderComponent implements OnInit {
     this.isClicked = !this.isClicked;
   }
 
-  sidebarToggleClick() {
-    this.isToggled = !this.isToggled;
-  }
+  // sidebarToggleClick() {
+  //   this.isToggled = !this.isToggled;
+  // }
 }
