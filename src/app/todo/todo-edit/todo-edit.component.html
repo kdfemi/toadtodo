@@ -1,23 +1,39 @@
 <!-- reactive form -->
-<form>
-    <div class="form-group">
+<form  [formGroup] = "todoForm" (ngSubmit)="saveTodo()">
+    <div class="form-group"
+    [ngClass]="(getTitle.invalid && getTitle.touched)? 'has-error' :
+    (getTitle.touched && getTitle.valid)?'has-success':''">
         <label for="title">Tido Title</label>
-        <input type="text" class="form-control" id="title">
+        <input type="text" class="form-control"
+        id="title" formControlName="title">
+        <span  class="help-block"
+         *ngIf="(getTitle.invalid && getTitle.touched)">Title cannot be left blank!</span>
     </div>
-    <div class="form-group text-center">
-        <label for="title">Task 1</label>
-        <div class="form-inline">
-            <input type="text" class="form-control" id="title">
-            <button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button>
+    <div formArrayName="tasks">
+      <div *ngFor="let task of getTask.controls; let i = index;" >
+        <div class="form-group text-center"  [appTaskValidation]="getTask.controls[i]">
+          <label for="title">{{i+1}}</label>
+          <div class="form-inline" >
+              <input type="text" class="form-control" id="task" [formControlName]="i" required>
+              <button class="btn btn-danger" (click)="removeTask(i)"><span class="glyphicon glyphicon-remove"></span></button>
+          </div>
         </div>
+      </div>
     </div>
     <div class="text-center">
-        <button type="button" class="btn btn-success my-btn">Insert</button>
+        <button type="button" class="btn btn-success my-btn" (click)="insertTask()">Insert</button>
     </div>
-    <textarea class="form-control textarea-description" rows="3" placeholder="Add breif description here"></textarea>
+    <div class="form-group"  [ngClass]="(getDescription.invalid && getDescription.touched)? 'has-error' :
+    (getDescription.touched && getDescription.valid)?'has-success':''">
+      <textarea class="form-control textarea-description" rows="3"
+      placeholder="Add breif description here" formControlName="description"></textarea>
+      <span  class="help-block"
+      *ngIf="(getDescription.invalid && getDescription.touched)">Description cannot be left blank!</span>
+    </div>
+
     <div class="text-center btn-group-add">
-        <button type="button" class="btn btn-success my-btn">Add</button>
-        <button type="button" class="btn btn-danger my-btn">Cancel</button>
+        <button type="button" class="btn btn-success my-btn" type="submit" [disabled]="todoForm.invalid">Save</button>
+        <button type="button" class="btn btn-danger my-btn"[routerLink]="['/','todo']" routerLinkActive="router-link-active" >Cancel</button>
     </div>
 
 </form>

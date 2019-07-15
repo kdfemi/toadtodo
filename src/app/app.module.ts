@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
@@ -23,6 +24,7 @@ import { SidebarToggleDirective } from './shared/sidebar-toggle.directive';
 import { NotFoundPageComponent } from './error404/not-found-page/not-found-page.component';
 import { SidebarTodoToggleDirective } from './shared/sidebar-todo-toggle.directive';
 import { MainbarTodoToggleDirective } from './shared/mainbar-todo-toggle.directive';
+import { TaskValidationDirective } from './todo/todo-edit/task-validation.directive';
 
 @NgModule({
   declarations: [
@@ -46,11 +48,14 @@ import { MainbarTodoToggleDirective } from './shared/mainbar-todo-toggle.directi
     SidebarToggleDirective,
     NotFoundPageComponent,
     SidebarTodoToggleDirective,
-    MainbarTodoToggleDirective
+    MainbarTodoToggleDirective,
+    TaskValidationDirective
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

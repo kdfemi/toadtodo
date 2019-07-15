@@ -28,4 +28,17 @@ export class TodoDetailComponent implements OnInit {
   navBack() {
     this.router.navigate(['todo', 'list']);
   }
+
+  pend() {
+    this.todoService.pendTodo(this.id);
+  }
+
+  delete() {
+    this.todoService.deleteTodo(this.id);
+    this.navBack();
+  }
+
+  edit() {
+    this.router.navigate(['todo', 'edit', this.id]);
+  }
 }

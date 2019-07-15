@@ -4,13 +4,13 @@
         <!-- (click)="sidebarToggleClick()" -->
         <button type="button" class="btn btn-default" [appSidebarTodoToggle]="sidebar" >
             <span class="glyphicon glyphicon-menu-hamburger"></span>
-            
+
         </button>
     </div>
 </div>
 <div class="row ">
     <div class="col-sm-4 col-xs-6 hidden-xs" #sidebar appSidebarTodoToggle> <!-- add hidden-xs, also make this 12 and toggle hidden between both side bar-->
-        <app-todo-option></app-todo-option>                 
+        <app-todo-option></app-todo-option>
     </div>
     <div class="col-sm-5 col-sm-offset-1 col-xs-12 col-xs-offset-0" appMainbarTodoToggle>
         <router-outlet></router-outlet>

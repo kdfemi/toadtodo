@@ -6,7 +6,7 @@ export class TodoModel {
      task: Task[];
      description: string;
      ownerId: number;
-     closed: boolean;
+     closed: boolean; // pend instead of closed
 
     constructor( id: number, title: string, task: Task[],  description: string, ownerId: number, closed: boolean) {
         this.id = id;

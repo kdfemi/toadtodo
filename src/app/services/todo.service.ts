@@ -43,18 +43,18 @@ export class TodoService {
     return this.todo.slice();
   }
 
-  getTodo(id: number) {
+  getTodo(itemId: number) {
 
-    return this.todo.filter((item: TodoModel) => id === item.id)[0];
+    return this.todo.filter((item: TodoModel) => itemId === item.id)[0];
   }
 
-  editTodo(id: number, editedTodo: TodoModel) {
+  editTodo(itemId: number, editedTodo: TodoModel) {
 
     let tempIndex;
 
     this.todo.forEach((item, index) => {
 
-      if (item.id === id) {
+      if (item.id === itemId) {
 
         tempIndex = index;
 
@@ -65,10 +65,15 @@ export class TodoService {
 
     this.todoChanged.next(this.todo.slice());
   }
+  addTodo(newTodo: TodoModel) {
+    this.todo.push(newTodo);
+    this.todoChanged.next(this.todo.slice());
 
-  deleteTodo(id: number) {
+  }
 
-    const index = this.getTodo(id);
+  deleteTodo(itemId: number) {
+
+    const index = this.getTodo(itemId);
 
     if (index) {
 
@@ -78,4 +83,13 @@ export class TodoService {
     }
 
   }
+
+  pendTodo(itemId: number) {
+
+    const tempArr = this.getTodo(itemId);
+    tempArr.closed = !tempArr.closed;
+    this.editTodo(itemId, tempArr);
+    this.todoChanged.next(this.todo.slice());
+  }
+
 }

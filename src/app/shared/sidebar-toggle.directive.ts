@@ -24,7 +24,7 @@ export class SidebarToggleDirective {
   }
   @HostListener('blur') onblur() {
     if ( this.el1.classList.contains('in') ) {
-      setTimeout( () => this.el1.classList.remove('in'), 300);
+      setTimeout( () => this.el1.classList.remove('in'), 100);
 
       // this.el1.classList.remove('in');
 

@@ -3,14 +3,16 @@
             <ul class="list-group">
                     <li class="list-group-item active text-center"><h4>{{todo.title}}</h4></li>
                     <div class="panel panel-default ">
-                            <div class="panel-body">
-                               <p> {{todo.description}}</p> 
+                            <div class="panel-body" [ngClass]="todo.closed? 'bg-danger':''">
+                               <p> {{todo.description}}</p>
                             </div>
                         </div>
-                    <li class="list-group-item list-group-item-success" 
-                    [ngClass]="task.finished ? 'list-group-item-success' :  'list-group-item-danger'" 
+                    <li class="list-group-item list-group-item-success"
+                    [ngClass]="task.finished ? 'list-group-item-success' :  'list-group-item-danger'"
                     *ngFor="let task of todo.task">{{task.task}}<span class="pull-right">
-                        <div class="checkbox"><input type="checkbox" name="{{'task' + task.id}}" id="{{task.id}}" [checked]="task.finished" [disabled]="task.finished"></div>
+                        <div class="checkbox"><input type="checkbox" name="{{'task' + task.id}}" id="{{task.id}}"
+                          [checked]="task.finished"
+                          [disabled]="task.finished"></div>
                     </span></li>
                   </ul>
     </div>
@@ -21,17 +23,24 @@
                         <button type="button" class="btn btn-primary dropdown-toggle ">
                           Action <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu">
-                          <li><a >Close</a></li>
+                        <ul class="dropdown-menu" style="cursor: default">
+                          <li (click)="pend()">
+                            <a *ngIf="!todo.closed; else unpend">pend</a>
+                            <ng-template #unpend>
+                             <a>unpend</a>
+                            </ng-template>
+                          </li>
                           <li role="separator" class="divider"></li>
-                          <li><a >Delete</a></li>
+                          <li (click)="edit()"><a>Edit</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li (click)="delete()"><a>Delete</a></li>
                         </ul>
                 </div>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12 text-center">
-            <button type="button" class="btn btn-danger" (click)="navBack()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="navBack()">Close</button>
         </div>
     </div>
 </div>

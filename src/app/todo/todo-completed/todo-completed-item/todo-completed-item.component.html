@@ -4,9 +4,9 @@
             <h3 class="bg-primary">{{todo.title}}</h3>
             <a class="list-group-item" style="cursor: pointer" [routerLink]="['/','todo','list', todo.id]">{{todo.description}}</a>
             <div class="progress">
-                <div class="progress-bar"  [ngStyle]=" {'width': ratio + '%'}" 
-                [ngClass]="(ratio >= 60 )? 'progress-bar-success' : 
-                (ratio >= 30 && ratio < 50)?'progress-bar-warning': 
+                <div class="progress-bar" style="min-width: 5%" [ngStyle]=" {'width': ratio + '%'}"
+                [ngClass]="(ratio >= 60 )? 'progress-bar-success' :
+                (ratio >= 30 && ratio < 50)?'progress-bar-warning':
                 (ratio >= 50 && ratio < 60)?'progress-bar-info': 'progress-bar-danger'"> <!--progress-bar-success alternate colors-->
                     <span >{{ratio}}% Complete</span>
                 </div>

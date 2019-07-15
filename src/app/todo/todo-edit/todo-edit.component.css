@@ -10,3 +10,6 @@ button{
 .textarea-description{
     margin:  40px auto;
 }
+textarea + span.help-block {
+  margin-top: -30px;
+}
