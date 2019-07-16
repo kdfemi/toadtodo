@@ -17,7 +17,7 @@ export class TodoService {
   'Learning angular from the begining to the end', 1, false),
 
   new TodoModel(2, 'Learn Ionic',
-  [new Task(1, 'mobile design', true),
+  [new Task(1, 'mobile design', false),
   new Task(2, 'pages', true),
   new Task(3, 'multiple pages', false)],
   'Learning Ionic from the begining to the end', 1, false),

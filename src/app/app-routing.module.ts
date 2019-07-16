@@ -28,7 +28,7 @@ const routes: Routes = [
     {path : 'edit', component: TodoEditComponent},
     {path: 'edit/:id', component: TodoEditComponent},
     {path: 'list', component: TodoListComponent},
-    {path: 'list/:id', component: TodoDetailComponent}
+    {path: 'list/:id', component: TodoDetailComponent},
   ]},
 
   {path: '**', component: NotFoundPageComponent}

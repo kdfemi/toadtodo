@@ -1,34 +1,24 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TodoModel } from '../../todo-model';
 import { Task } from '../../task';
+import { CompletionLevelRatioService } from 'src/app/services/completion-level-ratio.service';
 
 @Component({
   selector: 'app-todo-pending-item',
   templateUrl: './todo-pending-item.component.html',
-  styleUrls: ['./todo-pending-item.component.css']
+  styleUrls: ['./todo-pending-item.component.css'],
+  // providers: [CompletionLevelRatioService]
 })
 export class TodoPendingItemComponent implements OnInit {
 
   @Input() todo: TodoModel;
   ratio: number;
-  constructor() { }
+  constructor(private calculateRatioService: CompletionLevelRatioService) { }
 
   ngOnInit() {
-    this.calculateRatio();
+
+    this.ratio = this.calculateRatioService.calculateRatio(this.todo);
   }
 
-    calculateRatio(): number {
-    const length = this.todo.task.length;
-    let completed = 0;
-
-    this.todo.task.forEach((tk: Task) => {
-      if (tk.finished) {
-
-        completed = completed + 1;
-      }
-    });
-    this.ratio = Math.round( ( ( completed / length ) * 100) );
-    return  this.ratio;
-  }
 
 }

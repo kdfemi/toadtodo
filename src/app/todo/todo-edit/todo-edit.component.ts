@@ -18,7 +18,7 @@ export class TodoEditComponent implements OnInit {
   id: number;
   editMode = false;
   todoForm: FormGroup;
-  editedTask: Task[] = [];
+  editedTask: Task[] = []; // stores initial state of the todo task in edited mode
 
   ngOnInit() {
     this.route.params.subscribe(param => {
@@ -26,29 +26,28 @@ export class TodoEditComponent implements OnInit {
       this.id = +param[id];
       this.editMode = (param[id] != null);
       this.buildForm();
-      // console.log(this.todoForm);
-      // console.log(this.getTask);
+
     });
   }
 
   private buildForm() {
     let title = '';
     let description = '';
-
-    let task = new FormArray([
-      new FormControl(null, Validators.required)
+    const task = new FormArray([
+      new FormControl('', Validators.required)
     ]);
 
     if (this.editMode) {
       const todo = this.todoService.getTodo(this.id);
       title = todo.title;
       description = todo.description;
-      task = new FormArray([]);
+      task.clear(); // clear the initial control
 
+      // get the task value only from todo task array then push all tasks to `editedTask` array
       for (const taskEl of todo.task) {
         const tempTask =  taskEl.task;
         task.push(new FormControl(tempTask, Validators.required));
-        this.editedTask.push(taskEl);
+        this.editedTask.push(taskEl); // storing initial state of todo
       }
 
     }
@@ -58,6 +57,7 @@ export class TodoEditComponent implements OnInit {
       tasks: task
     });
   }
+  // getting controls from the form
   get getTask() {
     return this.todoForm.get('tasks') as FormArray;
   }
@@ -69,49 +69,65 @@ export class TodoEditComponent implements OnInit {
   }
 
   insertTask() {
-    const formControl = new FormControl(null, Validators.required)
-    this.getTask.controls.push(formControl);
-    console.log(formControl)
-    console.log(this.todoForm);
+    const formControl = new FormControl('', Validators.required);
+    this.getTask.push(formControl);
   }
-  removeTask(id: number) {
-    if (this.getTask.controls.length > 1) {
-      this.getTask.controls.splice(id, 1);
-      if (!(id > this.editedTask.length) ) {
-        this.editedTask.splice(id - 1, 1);
+
+  removeTask(index: number) {
+    // prevent task from beign deleted if it's the only task
+    if (this.getTask.length > 1) {
+
+      this.getTask.removeAt(index); // remove task from the form array
+
+      // incase of edited mode remove task from `editedTask` too
+      if (!(index > this.editedTask.length) ) {
+        this.editedTask.splice(index, 1);
       }
     }
   }
 
   saveTodo() {
-    const title = this.todoForm.get('title').value;
-    const description = this.todoForm.get('description').value;
-    const tasks: Task[] = [];
-    const taskControl = this.getTask.controls;
-    const newTodo = new TodoModel(null, title, null, description, 1, false);
+
+    // get all controls value
+    const title = this.getTitle.value;
+    const description = this.getDescription.value;
+    const taskControl = this.getTask.controls;  // getting all controls in the array
+
+    const tasks: Task[] = []; // array to store manipulated task to be saved
+
+    const newTodo = new TodoModel(null, title, null, description, 1, false); // todo structure for new or edited todo
 
     if (this.editMode) {
-      newTodo.id = this.id;
-      let index = 0;
 
+      newTodo.id = this.id; // store the edited todo id
+
+      let index = 0; /* iterator to compare to `editedTask` length
+      and get `editedTask` values and `taskControl` values for newly added tasks*/
+
+      // reconstruct edited tasks and push to `task` array
       while (!(index >= this.editedTask.length)) {
-          const currentTask = this.editedTask[index];
-          tasks.push(
-            new Task(currentTask.id, currentTask.task, currentTask.finished));
-          index++;
+
+        const currentTask = this.editedTask[index];
+        tasks.push(new Task(currentTask.id, currentTask.task, currentTask.finished));
+        index++;
         }
 
-      const length = taskControl.length - this.editedTask.length;
-      for (let i = 0; i < length;   i++ ) {
-          tasks.push(
-            new Task(index, taskControl[index].value, false));
-  }
+      let id = index + 1; // since task id doesnt start from zero
 
-      newTodo.task = this.editedTask;
+      const length = taskControl.length - this.editedTask.length; /* to determine where the just
+      added task should start from in the main `task`*/
+
+      for (let i = 0; i < length;   i++ ) {
+          tasks.push(new Task(id, taskControl[index].value, false));
+          index++;
+          id++;
+        }
+
+      // newTodo.task = this.editedTask;
       newTodo.task = tasks;
       this.todoService.editTodo(this.id, newTodo);
     } else {
-
+      // sets id for the task
       let index = 1;
       for (const task of taskControl) {
         tasks.push(
@@ -124,6 +140,14 @@ export class TodoEditComponent implements OnInit {
       this.todoService.addTodo(newTodo);
       this.id = newTodo.id;
     }
+    console.log(this.todoService.getTodo(this.id));
     this.router.navigate(['/', 'todo', 'list', this.id]);
+  }
+  cancel() {
+    if (this.editMode) {
+      this.router.navigate(['/', 'todo', 'list', this.id]);
+    } else{
+      this.router.navigate(['/', 'todo']);
+    }
   }
 }

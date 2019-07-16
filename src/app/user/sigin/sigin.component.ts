@@ -8,12 +8,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class SiginComponent implements OnInit {
 
-  constructor(private router :Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
-  login(){
-    this.router.navigate(['/','todo'])
+  login() {
+    this.router.navigate(['/', 'todo']);
   }
 
 }

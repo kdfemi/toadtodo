@@ -17,6 +17,10 @@
               <input type="text" class="form-control"  [formControlName]="i" required>
               <button type="button" class="btn btn-danger" (click)="removeTask(i)"><span class="glyphicon glyphicon-remove"></span></button>
           </div>
+          <span  class="help-block"
+          [ngSwitch]="1"
+          *ngIf="(task.invalid && task.touched)">you must fill <ng-template
+          [ngIf]="getTask.controls.length>1">or remove </ng-template>empty task!</span>
         </div>
       </div>
     </div>
@@ -33,7 +37,8 @@
 
     <div class="text-center btn-group-add">
         <button type="button" class="btn btn-success my-btn" type="submit" [disabled]="todoForm.invalid">Save</button>
-        <button type="button" class="btn btn-danger my-btn"[routerLink]="['/','todo']" routerLinkActive="router-link-active" >Cancel</button>
+        <button type="button" class="btn btn-danger my-btn" (click)="cancel()">Cancel</button>
     </div>
 
 </form>
+

@@ -1,3 +1,4 @@
+<form #todoDetailForm="ngForm">
 <div class="row">
     <div class="col-xs-12">
             <ul class="list-group">
@@ -7,12 +8,14 @@
                                <p> {{todo.description}}</p>
                             </div>
                         </div>
+
                     <li class="list-group-item list-group-item-success"
                     [ngClass]="task.finished ? 'list-group-item-success' :  'list-group-item-danger'"
-                    *ngFor="let task of todo.task">{{task.task}}<span class="pull-right">
-                        <div class="checkbox"><input type="checkbox" name="{{'task' + task.id}}" id="{{task.id}}"
-                          [checked]="task.finished"
-                          [disabled]="task.finished"></div>
+                    *ngFor="let task of todo.task; let index=index">{{task.task}}<span class="pull-right">
+                        <div class="checkbox" >
+                          <input type="checkbox" [name]="task.id"
+                          id="{{task.id}}" (click)="finishedTodo(index, todoDetailForm)"
+                          disabled="{{task.finished || todo.closed}}" [(ngModel)]="task.finished"></div>
                     </span></li>
                   </ul>
     </div>
@@ -24,13 +27,13 @@
                           Action <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" style="cursor: default">
-                          <li (click)="pend()">
+                          <li (click)="pend()" *ngIf="ratio < 100">
                             <a *ngIf="!todo.closed; else unpend">pend</a>
                             <ng-template #unpend>
                              <a>unpend</a>
                             </ng-template>
                           </li>
-                          <li role="separator" class="divider"></li>
+                          <li role="separator" class="divider" *ngIf="ratio < 100"></li>
                           <li (click)="edit()"><a>Edit</a></li>
                           <li role="separator" class="divider"></li>
                           <li (click)="delete()"><a>Delete</a></li>
@@ -40,7 +43,8 @@
     </div>
     <div class="row">
         <div class="col-xs-12 text-center">
-            <button type="button" class="btn btn-danger" (click)="navBack()">Close</button>
+            <button (click)="navBack()" class="btn btn-danger" >Close</button>
         </div>
     </div>
 </div>
+</form>

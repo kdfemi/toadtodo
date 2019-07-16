@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-todo',
@@ -13,8 +14,7 @@ export class TodoComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   sidebarToggleClick() {
     this.sidebar.nativeElement.classList.toggle('hidden-xs');

@@ -15,7 +15,7 @@ export class TaskValidationDirective {
   return (this.el.invalid && this.el.touched);
 }
 
-@HostBinding('class.hass-success') get valid() {
+@HostBinding('class.has-success') get valid() {
   return (this.el.touched && this.el.valid);
 }
 
