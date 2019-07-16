@@ -26,8 +26,8 @@ export class TodoEditComponent implements OnInit {
       this.id = +param[id];
       this.editMode = (param[id] != null);
       this.buildForm();
-      console.log(this.todoForm);
-      console.log(this.getTask);
+      // console.log(this.todoForm);
+      // console.log(this.getTask);
     });
   }
 
@@ -36,7 +36,7 @@ export class TodoEditComponent implements OnInit {
     let description = '';
 
     let task = new FormArray([
-      new FormControl('', Validators.required)
+      new FormControl(null, Validators.required)
     ]);
 
     if (this.editMode) {
@@ -69,10 +69,18 @@ export class TodoEditComponent implements OnInit {
   }
 
   insertTask() {
-    this.getTask.controls.push(new FormControl(''));
+    const formControl = new FormControl(null, Validators.required)
+    this.getTask.controls.push(formControl);
+    console.log(formControl)
+    console.log(this.todoForm);
   }
   removeTask(id: number) {
-    this.getTask.controls.splice(id, 1);
+    if (this.getTask.controls.length > 1) {
+      this.getTask.controls.splice(id, 1);
+      if (!(id > this.editedTask.length) ) {
+        this.editedTask.splice(id - 1, 1);
+      }
+    }
   }
 
   saveTodo() {
@@ -93,7 +101,7 @@ export class TodoEditComponent implements OnInit {
           index++;
         }
 
-      const length = this.getTask.controls.length - this.editedTask.length;
+      const length = taskControl.length - this.editedTask.length;
       for (let i = 0; i < length;   i++ ) {
           tasks.push(
             new Task(index, taskControl[index].value, false));
@@ -116,8 +124,6 @@ export class TodoEditComponent implements OnInit {
       this.todoService.addTodo(newTodo);
       this.id = newTodo.id;
     }
-    console.log(this.todoForm);
     this.router.navigate(['/', 'todo', 'list', this.id]);
-
   }
 }
