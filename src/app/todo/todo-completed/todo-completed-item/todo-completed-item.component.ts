@@ -6,7 +6,6 @@ import { CompletionLevelRatioService } from 'src/app/services/completion-level-r
   selector: 'app-todo-completed-item',
   templateUrl: './todo-completed-item.component.html',
   styleUrls: ['./todo-completed-item.component.css'],
-  // providers: [CompletionLevelRatioService]
 })
 export class TodoCompletedItemComponent implements OnInit {
 

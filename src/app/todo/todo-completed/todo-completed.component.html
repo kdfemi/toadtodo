@@ -4,4 +4,7 @@
             </app-todo-completed-item>
     </ng-template>
 </div>
+<ng-template [ngIf]="todos.length <= 0">
+  <h3>You don't have any Todo <a [routerLink]="['/','todo', 'edit']">Click here to start creating Todo</a></h3>
+</ng-template>
 

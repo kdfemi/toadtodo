@@ -16,9 +16,9 @@ export class CompletionLevelRatioService {
 
     todo.task.forEach((tk: Task) => {
       if (tk.finished) {
-        // console.log('from services ',tk)
+
         completed = completed + 1;
-        // console.log('number', completed);
+
       }
     });
     const ratio = Math.round( ( ( completed / length ) * 100) );

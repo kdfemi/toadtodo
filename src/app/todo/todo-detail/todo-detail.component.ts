@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs';
   selector: 'app-todo-detail',
   templateUrl: './todo-detail.component.html',
   styleUrls: ['./todo-detail.component.css'],
-  // providers: [ CompletionLevelRatioService]
 })
 export class TodoDetailComponent implements OnInit, OnChanges, OnDestroy {
 
@@ -54,9 +53,7 @@ export class TodoDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.todoService.editTodo(this.id, this.todo);
     setTimeout(() => {
       this.ratio = this.ratioCalculationService.calculateRatio(this.todo);
-      console.log('inside timer ', this.ratio);
     }, 100);
-    console.log('outside timer ', this.ratio);
 
   }
 

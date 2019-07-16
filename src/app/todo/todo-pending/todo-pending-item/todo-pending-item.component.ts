@@ -7,7 +7,6 @@ import { CompletionLevelRatioService } from 'src/app/services/completion-level-r
   selector: 'app-todo-pending-item',
   templateUrl: './todo-pending-item.component.html',
   styleUrls: ['./todo-pending-item.component.css'],
-  // providers: [CompletionLevelRatioService]
 })
 export class TodoPendingItemComponent implements OnInit {
 
