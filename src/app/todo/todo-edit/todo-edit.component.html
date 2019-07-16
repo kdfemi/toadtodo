@@ -14,8 +14,8 @@
         <div class="form-group text-center"  [appTaskValidation]="getTask.controls[i]">
           <label for="title">{{i+1}}</label>
           <div class="form-inline" >
-              <input type="text" class="form-control" id="task" [formControlName]="i" required>
-              <button class="btn btn-danger" (click)="removeTask(i)"><span class="glyphicon glyphicon-remove"></span></button>
+              <input type="text" class="form-control"  [formControlName]="i" required>
+              <button type="button" class="btn btn-danger" (click)="removeTask(i)"><span class="glyphicon glyphicon-remove"></span></button>
           </div>
         </div>
       </div>
