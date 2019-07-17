@@ -2,13 +2,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule} from '@angular/fire/database';
+
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { TodoComponent } from './todo/todo.component';
-import { SiginComponent } from './user/sigin/sigin.component';
-import { SigupComponent } from './user/sigup/sigup.component';
+import { SiginComponent } from './auth/sigin/sigin.component';
+import { SigupComponent } from './auth/sigup/sigup.component';
 import { TodoListComponent } from './todo/todo-list/todo-list.component';
 import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
 import { TodoOptionComponent } from './todo/todo-option/todo-option.component';
@@ -25,6 +31,7 @@ import { NotFoundPageComponent } from './error404/not-found-page/not-found-page.
 import { SidebarTodoToggleDirective } from './shared/sidebar-todo-toggle.directive';
 import { MainbarTodoToggleDirective } from './shared/mainbar-todo-toggle.directive';
 import { TaskValidationDirective } from './todo/todo-edit/task-validation.directive';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
@@ -55,7 +62,11 @@ import { TaskValidationDirective } from './todo/todo-edit/task-validation.direct
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]

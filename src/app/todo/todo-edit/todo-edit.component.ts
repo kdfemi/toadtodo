@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from 'src/app/services/todo.service';
-import { Task } from '../task';
-import { TodoModel } from '../todo-model';
+import { Task } from '../../model/task';
+import { TodoModel } from '../../model/todo-model';
 
 @Component({
   selector: 'app-todo-edit',
@@ -95,7 +95,7 @@ export class TodoEditComponent implements OnInit {
 
     const tasks: Task[] = []; // array to store manipulated task to be saved
 
-    const newTodo = new TodoModel(null, title, null, description, 1, false); // todo structure for new or edited todo
+    const newTodo = new TodoModel(null, title, null, description, 'test@test.com', false); // todo structure for new or edited todo
 
     if (this.editMode) {
 
@@ -146,7 +146,7 @@ export class TodoEditComponent implements OnInit {
   cancel() {
     if (this.editMode) {
       this.router.navigate(['/', 'todo', 'list', this.id]);
-    } else{
+    } else {
       this.router.navigate(['/', 'todo']);
     }
   }

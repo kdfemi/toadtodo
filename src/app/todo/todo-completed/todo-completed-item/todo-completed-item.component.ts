@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { TodoModel } from '../../todo-model';
+import { TodoModel } from '../../../model/todo-model';
 import { CompletionLevelRatioService } from 'src/app/services/completion-level-ratio.service';
 
 @Component({

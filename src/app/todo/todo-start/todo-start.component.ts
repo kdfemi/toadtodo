@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from 'src/app/services/todo.service';
-import { TodoModel } from '../todo-model';
+import { TodoModel } from '../../model/todo-model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo-start',
@@ -9,14 +11,20 @@ import { TodoModel } from '../todo-model';
 })
 export class TodoStartComponent implements OnInit {
 
-  todos: TodoModel[];
+  // todos: Observable<TodoModel[]>;
+  todotest: TodoModel[];
   todoStat: {'all': number, 'completed': number, 'ongoing': number, 'pending': number };
 
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-    this.todos = this.todoService.getTodos();
-    this.todoStat = this.determineStat(this.todos);
+    // this.todoService.getTodos().valueChanges().pipe(map(
+    //   (todoModelArray)=>{
+    //     this.todotest = todoModelArray;
+    //   }
+    // ));
+    this.todotest = this.todoService.getTodos();
+    this.todoStat = this.determineStat(this.todotest);
   }
 
   determineStat(todos: TodoModel[]): {'all': number, 'completed': number, 'ongoing': number, 'pending': number } {

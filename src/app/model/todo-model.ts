@@ -5,15 +5,15 @@ export class TodoModel {
      title: string;
      task: Task[];
      description: string;
-     ownerId: number;
+     owner: string;
      closed: boolean; // pend instead of closed
 
-    constructor( id: number, title: string, task: Task[],  description: string, ownerId: number, closed: boolean) {
+    constructor( id: number, title: string, task: Task[],  description: string, owner: string, closed: boolean) {
         this.id = id;
         this.title = title;
         this.task = task;
         this.description = description;
-        this.ownerId = ownerId;
+        this.owner = owner;
         this.closed = closed;
     }
 }

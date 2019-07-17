@@ -5,7 +5,7 @@
           </div>
     </div>
 </div>
-<div *ngFor="let todo of todos">
+<div *ngFor="let todo of todos" >
         <ng-template [ngIf]="todo.closed">
                 <app-todo-pending-item [todo]="todo">
                 </app-todo-pending-item>

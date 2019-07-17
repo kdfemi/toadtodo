@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { TodoModel } from '../todo/todo-model';
+import { TodoModel } from '../model/todo-model';
 import { Subject } from 'rxjs';
-import { Task } from '../todo/task';
+import { Task } from '../model/task';
+import { storage } from 'firebase';
+import { DataStorageService } from './data-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,33 +16,34 @@ export class TodoService {
   [new Task(1, 'introduction', true),
   new Task(2, 'components', false),
   new Task(3, 'directive', false, )],
-  'Learning angular from the begining to the end', 1, false),
+  'Learning angular from the begining to the end', 'test@test.com', false),
 
   new TodoModel(2, 'Learn Ionic',
   [new Task(1, 'mobile design', false),
   new Task(2, 'pages', true),
   new Task(3, 'multiple pages', false)],
-  'Learning Ionic from the begining to the end', 1, false),
+  'Learning Ionic from the begining to the end', 'test@test.com', false),
 
   new TodoModel(3, 'Learn java',
   [new Task(1, 'javaFx', true),
   new Task(2, 'jersey', true),
   new Task(3, 'Hibernate', false),
   new Task(4, 'Spring', false)],
-  'Learning angular from the begining to the end', 1, true),
+  'Learning angular from the begining to the end', 'test@test.com', true),
 
   new TodoModel(4, 'Learn Spring',
   [new Task(1, 'What is spring', true),
   new Task(2, 'Spring frameworks', true),
   new Task(3, 'Dependencing injection', true),
   new Task(4, 'IoC', true)],
-  'Learning angular from the begining to the end', 1, false)
+  'Learning angular from the begining to the end', 'test@test.com', false)
 
 ];
   constructor() { }
 
   getTodos() {
     return this.todo.slice();
+    // return this.dataStorageService.getAllTodos();
   }
 
   getTodo(itemId: number) {

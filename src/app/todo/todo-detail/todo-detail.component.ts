@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TodoModel } from '../todo-model';
+import { TodoModel } from '../../model/todo-model';
 import { TodoService } from 'src/app/services/todo.service';
 import { NgForm } from '@angular/forms';
-import { Task } from '../task';
+import { Task } from '../../model/task';
 import { CompletionLevelRatioService } from 'src/app/services/completion-level-ratio.service';
 import { Subscription } from 'rxjs';
 

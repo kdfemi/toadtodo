@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { TodoModel } from '../todo/todo-model';
-import { Task } from '../todo/task';
+import { TodoModel } from '../model/todo-model';
+import { Task } from '../model/task';
 import { Subject } from 'rxjs';
 
 @Injectable({

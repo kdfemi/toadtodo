@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoService } from 'src/app/services/todo.service';
-import { TodoModel } from '../todo-model';
+import { TodoModel } from '../../model/todo-model';
 import { Subscription } from 'rxjs';
 
 @Component({

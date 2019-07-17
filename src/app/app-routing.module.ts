@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { SiginComponent } from './user/sigin/sigin.component';
-import { SigupComponent } from './user/sigup/sigup.component';
+import { SiginComponent } from './auth/sigin/sigin.component';
+import { SigupComponent } from './auth/sigup/sigup.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoCompletedComponent } from './todo/todo-completed/todo-completed.component';
 import { TodoStartComponent } from './todo/todo-start/todo-start.component';
