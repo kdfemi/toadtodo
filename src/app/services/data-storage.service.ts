@@ -9,44 +9,23 @@ import { AngularFireDatabase } from '@angular/fire/database';
 })
 export class DataStorageService {
 
-  constructor(private todoService: TodoService, private httpClient: HttpClient, private angularFireDatabase: AngularFireDatabase) {}
+  constructor(private angularFireDatabase: AngularFireDatabase) {}
 
-  uploadTodo(todo: TodoModel) {
+  basePath = 'todos';
+  database = this.angularFireDatabase.list<TodoModel>(this.basePath);
 
-      this.angularFireDatabase.list('todos').push(todo).then(() =>
-        console.log('done'));
-
-  }
   getAllTodos() {
-   return this.angularFireDatabase.list<TodoModel>('todos');
-  }
-
-  // uploadTodo() {
-  //   const todos = this.todoService.getTodos();
-  //   const encodedEmail = btoa('test@test.com');
-  //   this.httpClient.post('https://toadtodo-92e87.firebaseio.com/' + encodedEmail + '.json', todos).subscribe(
-  //     (res) => {
-  //       console.log(res);
-  //     });
-
-  //  }
-
-   updateTodo() {
-    const todos = this.todoService.getTodos();
-    const encodedEmail = btoa('test@test.com');
-    this.httpClient.put('https://toadtodo-92e87.firebaseio.com/' + encodedEmail + '.json', todos).subscribe(
-      (res) => {
-        console.log(res);
-      });
+    return this.database.snapshotChanges();
    }
 
-   deleteTodo() {
-    const todos = this.todoService.getTodos();
-    const encodedEmail = btoa('test@test.com');
-    this.httpClient.put('https://toadtodo-92e87.firebaseio.com/' + encodedEmail + '.json', todos).subscribe(
-      (res) => {
-        console.log(res);
-      });
-       }
+   postTodo(todo: TodoModel) {
 
+    return this.database.push(todo);
+
+}
+
+  putTodo(todo: TodoModel, $key: string) {
+    const basepath = `todos/${$key}`;
+    return this.angularFireDatabase.object(basepath).update(todo);
+   }
 }

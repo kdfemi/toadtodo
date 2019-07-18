@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TodoModel } from '../model/todo-model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Task } from '../model/task';
-import { storage } from 'firebase';
 import { DataStorageService } from './data-storage.service';
 
 @Injectable({
@@ -10,7 +9,9 @@ import { DataStorageService } from './data-storage.service';
 })
 export class TodoService {
 
-  todoChanged = new Subject<TodoModel[]>();
+  /**
+   * @deprecated
+   */
   todo = [
   new TodoModel(1, 'Learn Angular',
   [new Task(1, 'introduction', true),
@@ -39,38 +40,54 @@ export class TodoService {
   'Learning angular from the begining to the end', 'test@test.com', false)
 
 ];
-  constructor() { }
 
-  getTodos() {
-    return this.todo.slice();
-    // return this.dataStorageService.getAllTodos();
+  private emptyTodo: TodoModel[];
+  todoObservable = new Subject<TodoModel[]>();
+  /**
+   * @deprecated use todoObservable
+   */
+  todoChanged = new Subject<TodoModel[]>(); // for backward compatibility
+
+  constructor(private databaseService: DataStorageService) { }
+
+  getTodos() { // working
+
+    this.databaseService.getAllTodos()
+    .subscribe((todosFromDB) => {
+
+      this.emptyTodo = [];
+      for (const todoFromDB of todosFromDB) {
+        const todoPayload = todoFromDB.payload.val();
+        const todoItem: TodoModel = todoPayload as TodoModel;
+        todoItem.$key = todoFromDB.key;
+        this.emptyTodo.push(todoItem);
+      }
+      this.todoObservable.next(this.emptyTodo);
+    });
+    // return this.todoObservable.asObservable();
+    return this.todo.slice(); // for backward compatibility
   }
 
-  getTodo(itemId: number) {
-
-    return this.todo.filter((item: TodoModel) => itemId === item.id)[0];
+  getTodo(itemId: number) { // working
+    // i need to fix reloading bug (error) after forward compatibility
+    return this.emptyTodo.filter(
+      (item: TodoModel) => itemId === item.id)[0];
   }
 
   editTodo(itemId: number, editedTodo: TodoModel) {
 
-    let tempIndex;
+    const { id, title, task, description, owner, closed} = editedTodo;
+    const newTodo = new TodoModel(id, title, task, description, owner, closed);
+    this.todoObservable.next(this.emptyTodo);
+    return this.databaseService.putTodo(newTodo, editedTodo.$key);
 
-    this.todo.forEach((item, index) => {
-
-      if (item.id === itemId) {
-
-        tempIndex = index;
-
-      }
-    });
-
-    this.todo[tempIndex] = editedTodo;
-
-    this.todoChanged.next(this.todo.slice());
   }
-  addTodo(newTodo: TodoModel) {
+
+  addTodo(newTodo: TodoModel) { // working
+
     this.todo.push(newTodo);
     this.todoChanged.next(this.todo.slice());
+    return  this.databaseService.postTodo(newTodo);
 
   }
 
@@ -88,11 +105,10 @@ export class TodoService {
   }
 
   pendTodo(itemId: number) {
-
+    // working
     const tempArr = this.getTodo(itemId);
     tempArr.closed = !tempArr.closed;
     this.editTodo(itemId, tempArr);
-    this.todoChanged.next(this.todo.slice());
   }
 
 }

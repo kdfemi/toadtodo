@@ -12,19 +12,22 @@ export class TodoListComponent implements OnInit, OnDestroy {
 
   constructor(private todoService: TodoService) { }
 
-  todoChangedSub: Subscription;
-  todos = this.todoService.getTodos();
+  getTodosSubscription: Subscription;
+  todos: TodoModel[];
 
   ngOnInit(): void {
 
-    this.todoChangedSub = this.todoService.todoChanged.subscribe((todo: TodoModel[]) => {
-      this.todos = todo;
-    });
+    this.todoService.getTodos();
+    this.getTodosSubscription = this.todoService.todoObservable.subscribe(
+      (todoArray) => {
+        this.todos = todoArray;
+      });
 
   }
 
   ngOnDestroy(): void {
-    this.todoChangedSub.unsubscribe();
+
+    this.getTodosSubscription.unsubscribe();
   }
 
 }

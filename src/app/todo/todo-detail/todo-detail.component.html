@@ -1,21 +1,22 @@
+<!-- everything is wrapped inside a form -->
 <form #todoDetailForm="ngForm">
 <div class="row">
     <div class="col-xs-12">
             <ul class="list-group">
-                    <li class="list-group-item active text-center"><h4>{{todo.title}}</h4></li>
+                    <li class="list-group-item active text-center"><h4>{{todo?.title}}</h4></li>
                     <div class="panel panel-default ">
-                            <div class="panel-body" [ngClass]="todo.closed? 'bg-danger':''">
-                               <p> {{todo.description}}</p>
+                            <div class="panel-body" [ngClass]="todo?.closed? 'bg-danger':''">
+                               <p> {{todo?.description}}</p>
                             </div>
                         </div>
 
                     <li class="list-group-item list-group-item-success"
-                    [ngClass]="task.finished ? 'list-group-item-success' :  'list-group-item-danger'"
-                    *ngFor="let task of todo.task; let index=index">{{task.task}}<span class="pull-right">
+                    [ngClass]="task?.finished ? 'list-group-item-success' :  'list-group-item-danger'"
+                    *ngFor="let task of todo?.task; let index=index">{{task?.task}}<span class="pull-right">
                         <div class="checkbox" >
-                          <input type="checkbox" [name]="task.id"
-                          id="{{task.id}}" (click)="finishedTodo(index, todoDetailForm)"
-                          disabled="{{task.finished || todo.closed}}" [(ngModel)]="task.finished"></div>
+                          <input type="checkbox" [name]="task?.id"
+                          id="{{task?.id}}" (click)="finishedTodo(index, todoDetailForm)"
+                          disabled="{{task?.finished || todo?.closed}}" [(ngModel)]="task.finished"></div>
                     </span></li>
                   </ul>
     </div>
@@ -28,7 +29,7 @@
                         </button>
                         <ul class="dropdown-menu" style="cursor: default">
                           <li (click)="pend()" *ngIf="ratio < 100">
-                            <a *ngIf="!todo.closed; else unpend">pend</a>
+                            <a *ngIf="!todo?.closed; else unpend">pend</a>
                             <ng-template #unpend>
                              <a>unpend</a>
                             </ng-template>

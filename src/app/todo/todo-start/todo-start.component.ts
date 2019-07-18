@@ -1,30 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoService } from 'src/app/services/todo.service';
 import { TodoModel } from '../../model/todo-model';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-todo-start',
   templateUrl: './todo-start.component.html',
   styleUrls: ['./todo-start.component.css']
 })
-export class TodoStartComponent implements OnInit {
+export class TodoStartComponent implements OnInit, OnDestroy {
 
-  // todos: Observable<TodoModel[]>;
-  todotest: TodoModel[];
+
+
   todoStat: {'all': number, 'completed': number, 'ongoing': number, 'pending': number };
 
   constructor(private todoService: TodoService) { }
-
+  getTodosSubscription: Subscription;
   ngOnInit() {
-    // this.todoService.getTodos().valueChanges().pipe(map(
-    //   (todoModelArray)=>{
-    //     this.todotest = todoModelArray;
-    //   }
-    // ));
-    this.todotest = this.todoService.getTodos();
-    this.todoStat = this.determineStat(this.todotest);
+
+  this.todoService.getTodos();
+  this.getTodosSubscription = this.todoService.todoObservable.subscribe((e: TodoModel[]) => {
+    this.todoStat = this.determineStat(e);
+    });
+  }
+
+  ngOnDestroy() {
+    // this.getTodosSubscription.unsubscribe();
   }
 
   determineStat(todos: TodoModel[]): {'all': number, 'completed': number, 'ongoing': number, 'pending': number } {
@@ -35,18 +37,20 @@ export class TodoStartComponent implements OnInit {
     const All = todos.length;
 
     for (const todo of todos) {
+      const taskArray = todo.task;
 
       if (todo.closed === true) {
         Pending += 1;
         continue;
       }
 
-      for (const tk of todo.task) {
-        if (!tk.finished) {
+      for (const task of taskArray) {
+        if (!task.finished) {
           Ongoing += 1;
           break;
         }
       }
+
     }
     Completed = All - (Pending + Ongoing);
 

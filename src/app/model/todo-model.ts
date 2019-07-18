@@ -1,6 +1,8 @@
 import { Task } from './task';
 
 export class TodoModel {
+
+    $key: string;
      id: number;
      title: string;
      task: Task[];

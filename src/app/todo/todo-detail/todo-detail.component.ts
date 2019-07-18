@@ -12,48 +12,48 @@ import { Subscription } from 'rxjs';
   templateUrl: './todo-detail.component.html',
   styleUrls: ['./todo-detail.component.css'],
 })
-export class TodoDetailComponent implements OnInit, OnChanges, OnDestroy {
+export class TodoDetailComponent implements OnInit, OnDestroy {
 
   id: number;
   todo: TodoModel;
   task: Task;
   ratio: number;
-  subscription: Subscription;
+  getTodosubscription: Subscription;
 
   constructor(private route: ActivatedRoute, private todoService: TodoService,
               private router: Router, private ratioCalculationService: CompletionLevelRatioService) { }
 
   ngOnInit() {
-
     const value = 'id';
-
+    // get route snapshot(getting id)
     this.route.params.subscribe((param) => {
      this.id = +param[value];
     });
-
     this.todo = this.todoService.getTodo(this.id);
     this.ratio = this.ratioCalculationService.calculateRatio(this.todo);
 
-    this.subscription = this.todoService.todoChanged.subscribe(
+    this. getTodosubscription = this.todoService.todoObservable.subscribe(
       newTodo => {
         this.todo = newTodo[this.id - 1];
+        console.log(this.todo);
       }
     );
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('something ', changes);
   }
 
   navBack() {
     this.router.navigate(['todo', 'list']);
   }
 
+  // activated when check box is clicked  automatically update
   finishedTodo(index: number, todoDetailForm: NgForm) {
+
     this.todo.task[index].finished = todoDetailForm.form.value[index + 1];
-    this.todoService.editTodo(this.id, this.todo);
-    setTimeout(() => {
-      this.ratio = this.ratioCalculationService.calculateRatio(this.todo);
-    }, 100);
+    this.todoService.editTodo(this.id, this.todo).then(
+      () =>  setTimeout(() => {
+        this.ratio = this.ratioCalculationService.calculateRatio(this.todo);
+      }, 300)
+    );
+
 
   }
 
@@ -72,7 +72,7 @@ export class TodoDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    // this. getTodosubscription.unsubscribe();
   }
 
 }
