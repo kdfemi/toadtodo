@@ -1,10 +1,13 @@
 <div *ngFor="let todo of todos">
-    <ng-template [ngIf]="!todo.closed">
+    <ng-template [ngIf]="!todo?.closed">
             <app-todo-completed-item  [todo]="todo">
             </app-todo-completed-item>
     </ng-template>
 </div>
-<ng-template [ngIf]="todos.length <= 0">
+<ng-template [ngIf]="todos?.length <= 0 && todos">
   <h3>You don't have any Todo <a [routerLink]="['/','todo', 'edit']">Click here to start creating Todo</a></h3>
+</ng-template>
+<ng-template [ngIf]="!todos">
+  <p>Loading.......</p>
 </ng-template>
 

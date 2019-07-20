@@ -18,14 +18,24 @@ export class DataStorageService {
     return this.database.snapshotChanges();
    }
 
-   postTodo(todo: TodoModel) {
+  getTodo($key: string) {
+    const path = `todos/${$key}`;
+    return this.angularFireDatabase.object<TodoModel>(path).valueChanges();
+   }
+
+  postTodo(todo: TodoModel) {
 
     return this.database.push(todo);
-
-}
+  }
 
   putTodo(todo: TodoModel, $key: string) {
-    const basepath = `todos/${$key}`;
-    return this.angularFireDatabase.object(basepath).update(todo);
+    const path = `todos/${$key}`;
+    return this.angularFireDatabase.object(path).update(todo);
    }
+
+   deleteTodo($key: string) {
+    const path = `todos/${$key}`;
+    return this.angularFireDatabase.object(path).remove();
+   }
+
 }

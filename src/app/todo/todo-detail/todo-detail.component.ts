@@ -5,7 +5,7 @@ import { TodoService } from 'src/app/services/todo.service';
 import { NgForm } from '@angular/forms';
 import { Task } from '../../model/task';
 import { CompletionLevelRatioService } from 'src/app/services/completion-level-ratio.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-todo-detail',
@@ -14,14 +14,15 @@ import { Subscription } from 'rxjs';
 })
 export class TodoDetailComponent implements OnInit, OnDestroy {
 
+  constructor(private route: ActivatedRoute, private todoService: TodoService,
+              private router: Router, private ratioCalculationService: CompletionLevelRatioService) { }
+
   id: number;
   todo: TodoModel;
   task: Task;
   ratio: number;
-  getTodosubscription: Subscription;
-
-  constructor(private route: ActivatedRoute, private todoService: TodoService,
-              private router: Router, private ratioCalculationService: CompletionLevelRatioService) { }
+  getTodosubscription$: Subscription;
+  getTodo$: Subscription;
 
   ngOnInit() {
     const value = 'id';
@@ -29,15 +30,32 @@ export class TodoDetailComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((param) => {
      this.id = +param[value];
     });
-    this.todo = this.todoService.getTodo(this.id);
-    this.ratio = this.ratioCalculationService.calculateRatio(this.todo);
 
-    this. getTodosubscription = this.todoService.todoObservable.subscribe(
-      newTodo => {
-        this.todo = newTodo[this.id - 1];
-        console.log(this.todo);
-      }
-    );
+    const getTodo: Observable<TodoModel[]> = this.todoService.getTodo(this.id);
+
+    if (getTodo) { // if geTodo defined, because of reloading to get all todos again
+      this.getTodo$ = getTodo.subscribe(
+        () => {
+          console.log(this.todoService.emptyTodo.length);
+          if (this.todoService.emptyTodo.length >= this.id) {
+            this.todoService.getTodo(this.id);
+          } else {
+            this.router.navigate(['todo', 'not-found']);
+          }
+
+
+        }
+      );
+    }
+
+    this.getTodosubscription$ = this.todoService.todoItem$.subscribe(
+      (todo: TodoModel) => {
+        if (todo) {
+          this.todo = todo;
+          this.ratio = this.ratioCalculationService.calculateRatio(this.todo); // to hide pend/unpend option if task completes
+        }
+
+      });
   }
 
   navBack() {
@@ -46,8 +64,8 @@ export class TodoDetailComponent implements OnInit, OnDestroy {
 
   // activated when check box is clicked  automatically update
   finishedTodo(index: number, todoDetailForm: NgForm) {
-
-    this.todo.task[index].finished = todoDetailForm.form.value[index + 1];
+    console.log(todoDetailForm.form.value);
+    this.todo.task[index].finished = !todoDetailForm.form.value[index + 1];
     this.todoService.editTodo(this.id, this.todo).then(
       () =>  setTimeout(() => {
         this.ratio = this.ratioCalculationService.calculateRatio(this.todo);
@@ -59,12 +77,11 @@ export class TodoDetailComponent implements OnInit, OnDestroy {
 
   pend() {
     this.todoService.pendTodo(this.id);
-    console.log(this.todo);
   }
 
   delete() {
-    this.todoService.deleteTodo(this.id);
-    this.navBack();
+    this.todoService.deleteTodo(this.id)
+    .then(() => this.navBack());
   }
 
   edit() {
@@ -72,7 +89,13 @@ export class TodoDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this. getTodosubscription.unsubscribe();
+    if (this.getTodosubscription$) {
+      this.getTodosubscription$.unsubscribe();
+    }
+
+    if (this.getTodo$) {
+      this.getTodo$.unsubscribe();
+    }
   }
 
 }

@@ -14,7 +14,11 @@ export class TodoCompletedComponent implements OnInit {
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-    this.todos = this.todoService.getTodos();
+    this.todoService.getTodos();
+    this.todoService.todoObservable.subscribe(
+      (todoArray) => {
+        this.todos = todoArray;
+      });
   }
 
 }

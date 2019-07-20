@@ -26,7 +26,6 @@ export class TodoEditComponent implements OnInit {
       this.id = +param[id];
       this.editMode = (param[id] != null);
       this.buildForm();
-
     });
   }
 
@@ -38,7 +37,8 @@ export class TodoEditComponent implements OnInit {
     ]);
 
     if (this.editMode) {
-      const todo = this.todoService.getTodo(this.id);
+      // const todo = this.todoService.getTodo(this.id);
+      const todo = this.todoService.todoItem;
       title = todo.title;
       description = todo.description;
       task.clear(); // clear the initial control
@@ -51,12 +51,15 @@ export class TodoEditComponent implements OnInit {
       }
 
     }
+
     this.todoForm = new FormGroup({
       title: new FormControl(title, Validators.required),
       description: new FormControl(description, Validators.required),
       tasks: task
     });
   }
+
+
   // getting controls from the form
   get getTask() {
     return this.todoForm.get('tasks') as FormArray;
@@ -125,7 +128,7 @@ export class TodoEditComponent implements OnInit {
 
       // newTodo.task = this.editedTask;
       newTodo.task = tasks;
-      this.todoService.editTodo(this.id, newTodo);
+      this.todoService.editTodo(this.id, newTodo).then(() => this.router.navigate(['/', 'todo', 'list', this.id]));
     } else {
       // sets id for the task
       let index = 1;
@@ -134,15 +137,15 @@ export class TodoEditComponent implements OnInit {
           new Task(index, task.value, false));
         index++;
       }
-      const length = this.todoService.getTodos().length;
+      const length = this.todoService.emptyTodo.length;
       newTodo.id = length + 1;
       newTodo.task = tasks;
-      this.todoService.addTodo(newTodo);
       this.id = newTodo.id;
+      this.todoService.addTodo(newTodo).then(() => this.router.navigate(['/', 'todo', 'list', this.id]));
+
     }
-    console.log(this.todoService.getTodo(this.id));
-    this.router.navigate(['/', 'todo', 'list', this.id]);
   }
+
   cancel() {
     if (this.editMode) {
       this.router.navigate(['/', 'todo', 'list', this.id]);

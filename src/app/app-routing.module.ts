@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { SiginComponent } from './auth/sigin/sigin.component';
@@ -29,6 +29,7 @@ const routes: Routes = [
     {path: 'edit/:id', component: TodoEditComponent},
     {path: 'list', component: TodoListComponent},
     {path: 'list/:id', component: TodoDetailComponent},
+    {path: 'not-found', component: NotFoundPageComponent},
   ]},
 
   {path: '**', component: NotFoundPageComponent}
