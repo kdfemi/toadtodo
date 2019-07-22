@@ -26,7 +26,7 @@ export class TodoStartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.getTodosSubscription.unsubscribe();
+    this.getTodosSubscription.unsubscribe();
   }
 
   determineStat(todos: TodoModel[]): {'all': number, 'completed': number, 'ongoing': number, 'pending': number } {

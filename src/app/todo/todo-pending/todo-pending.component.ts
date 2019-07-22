@@ -1,27 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TodoModel } from '../../model/todo-model';
 import { TodoService } from 'src/app/services/todo.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-pending',
   templateUrl: './todo-pending.component.html',
   styleUrls: ['./todo-pending.component.css']
 })
-export class TodoPendingComponent implements OnInit {
+export class TodoPendingComponent implements OnInit, OnDestroy {
 
-  // todos: Observable<TodoModel[]>;
+  todos$: Subscription;
   todos: TodoModel[];
 
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
     this.todoService.getTodos();
-    this.todoService.todoObservable.subscribe(
+    this.todos$ = this.todoService.todoObservable.subscribe(
       (todoArray) => {
         this.todos = todoArray;
       });
-    // .valueChanges();
+  }
+
+  ngOnDestroy() {
+    this.todos$.unsubscribe();
   }
 
 }

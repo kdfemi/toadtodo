@@ -4,29 +4,32 @@
         <div class="navbar-header" style="display: inline">
             <!-- toogle button -->
             <!-- (click)="sidebarToggleClick()" -->
-            <button type="button" class="navbar-toggle collapsed" [appSidebarToggle]="sidebar" > 
+            <button type="button" class="navbar-toggle collapsed" [appSidebarToggle]="sidebar" >
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a  class="navbar-brand" [routerLink]="['/']"> 
+            <a  class="navbar-brand" [routerLink]="['/']">
                 <img src="" alt="BRAND">
             </a>
         </div>
         <!-- [ngClass]="isToggled? 'in':''" -->
         <div class="collapse navbar-collapse  text-center"  appSidebarToggle #sidebar> <!--add .in to toggole dropdown-->
-            <nav class="nav navbar-nav"> 
+            <nav class="nav navbar-nav">
                     <li role="presentation" routerLinkActive="active"><a [routerLink]="['/', 'about']">About Us</a></li>
                     <li role="presentation" routerLinkActive="active"><a [routerLink]="['/', 'contact']">Contact Us</a></li>
                     <li role="presentation" routerLinkActive="active"><a [routerLink]="['/', 'help']" >Help</a></li>
             </nav>
             <!-- sign up button -->
             <nav class="nav navbar-nav navbar-right ">
-                    <button  class="btn btn-success navbar-btn" (click)="onSignIn()" #logginAction>signin</button>
-                </nav>
+                <button  class="btn btn-success navbar-btn" (click)="onSignIn()" [ngClass]="{'hidden': isAuthenticated()}" #logginAction>signin</button>
+            </nav>
+            <nav class="nav navbar-nav navbar-right ">
+              <button  class="btn btn-success navbar-btn" (click)="logout()" [ngClass]="{'hidden': !isAuthenticated()}">Logout</button>
+          </nav>
         </div>
-       
+
     </div>
 
 </nav>

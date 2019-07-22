@@ -1,14 +1,15 @@
-<form>
+<form #sigin="ngForm" (ngSubmit)="login(sigin)">
     <div class="form-group">
         <label for="username">username</label>
-        <input type="text" class="form-control" id="username" placeholder="username / email">
+        <input type="email" class="form-control" id="email" placeholder="email" name="email" ngModel>
     </div>
     <div class="form-group">
         <label for="password">password</label>
-        <input type="password" id="password" class="form-control" placeholder="123456">
+        <input type="password" id="password" class="form-control" placeholder="123456" name="password" ngModel>
     </div>
     <div class="text-center">
-       <button class="btn btn-primary" type="button" (click)="login()">Signin</button> 
+       <button class="btn btn-primary" type="submit">Signin</button>
     </div>
-    
+
 </form>
+
