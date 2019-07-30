@@ -3,8 +3,7 @@ import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnaps
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { resolve } from 'url';
-import { reject } from 'q';
+
 
 @Injectable({
   providedIn: 'root'

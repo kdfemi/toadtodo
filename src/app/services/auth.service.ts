@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
+import 'firebase/auth';
 import { DataStorageService } from './data-storage.service';
 import { UserModel } from '../model/user-model';
-import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
