@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { DataStorageService } from 'src/app/services/data-storage.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 
 @Component({
@@ -11,12 +9,20 @@ import { AngularFireAuth } from '@angular/fire/auth';
   templateUrl: './sigup.component.html',
   styleUrls: ['./sigup.component.css']
 })
-export class SigupComponent implements OnInit {
+export class SigupComponent implements OnInit, AfterViewInit {
 
-  constructor(private authService: AuthService, private router: Router, private aut: AngularFireAuth) {}
+  constructor(private authService: AuthService, private router: Router) {}
   state: firebase.User;
+  errorMessage: string;
+  @ViewChild('passwordField', {static: false}) passworField: ElementRef;
   ngOnInit() {
 
+  }
+
+  ngAfterViewInit() {
+    this.passworField.nativeElement.addEventListener('focus', (e) => {
+      e.target.removeAttribute('readonly');
+    });
   }
 
   submit(signupform: NgForm) {
@@ -29,7 +35,11 @@ export class SigupComponent implements OnInit {
       .then(
         () => this.router.navigate(['/', 'todo']))
       .catch(
-        (err) => console.log(err));
+        (err) => {
+          this.errorMessage = err.message;
+          console.log(err.message);
+
+        });
     }
   }
 

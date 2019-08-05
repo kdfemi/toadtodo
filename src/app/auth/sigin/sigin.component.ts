@@ -13,6 +13,8 @@ export class SiginComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService, private aut: AngularFireAuth) { }
   state: firebase.User;
+  errorMessage: string;
+  isError = false;
   ngOnInit() {
 
   }
@@ -22,8 +24,11 @@ export class SiginComponent implements OnInit {
     this.authService.signin(email, password).then(
       () => this.router.navigate(['/', 'todo'])
     ).catch(
-      (err) => console.log(err)
-    );
+      (err) => {
+        this.isError = true;
+        console.log(err.message);
+
+      });
 
   }
 

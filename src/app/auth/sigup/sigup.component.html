@@ -1,4 +1,5 @@
-<form #signupform="ngForm" (ngSubmit)="submit(signupform)">
+<div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+<form #signupform="ngForm" (ngSubmit)="submit(signupform)" autocomplete="off">
     <div class="row">
         <div class="col-xs-12">
             <h3 class="text-center">Sign up</h3>
@@ -7,12 +8,14 @@
                 <input type="email" class="form-control"
                 id="email" placeholder="example@toadtodo.com"
                 pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-                name="email" ngModel required>
+                name="email" ngModel required >
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="123456" name="password" ngModel required minlength="6">
-            </div>
+                <input type="password" class="form-control" id="password"
+
+                placeholder="123456" name="password" ngModel required minlength="6"  #passwordField readonly>
+            </div><!-- [disabled]="signupform.untouched" -->
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" placeholder="toadtodo" name="username" ngModel required minlength="4">
@@ -20,7 +23,7 @@
             <div class="checkbox">
                 <label >
                     <input type="checkbox" name="agreed" id="agreed" #agree ngModel>
-                    agree to our <a [routerLink]="['/']">terms</a> and <a [routerLink]="['/']">condition</a>
+                    agree to our <a [routerLink]="['/']">terms</a> and <a [routerLink]="['/']" >condition</a>
                 </label>
             </div>
         </div>

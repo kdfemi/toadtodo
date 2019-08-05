@@ -24,13 +24,18 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.location.path() === '/signup') {
       this.loggingAction.nativeElement.innerText = 'signin';
+    } else if (this.location.path() === '') {
+      this.loggingAction.nativeElement.innerText = 'signin';
     } else {
       this.loggingAction.nativeElement.innerText = 'signup';
     }
   }
 
   onSignIn() {
-    if (this.location.path() === '/signup' ) {
+    if (this.location.path() === '' ) {
+      this.loggingAction.nativeElement.innerText = 'signup';
+      this.router.navigate(['signin'], {relativeTo: this.route});
+    } else  if (this.location.path() === '/signup' ) {
       this.loggingAction.nativeElement.innerText = 'signup';
       this.router.navigate(['signin'], {relativeTo: this.route});
     } else {
